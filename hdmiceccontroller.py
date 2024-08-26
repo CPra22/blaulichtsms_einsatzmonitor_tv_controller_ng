@@ -86,13 +86,13 @@ class PythonCecController(AbstractCecController):
 
     def power_on(self):
         if not self.is_on():
-            self.logger.info("Power on HDMI CEC device")
+            self.logger.debug("Power on HDMI CEC device")
             self.hdmi_cec_device.power_on()
             self.activate_source()
 
     def standby(self):
         if self.is_on():
-            self.logger.info("Standby HDMI CEC device")
+            self.logger.debug("Standby HDMI CEC device")
             self.hdmi_cec_device.standby()
 
     def activate_source(self):
@@ -185,7 +185,7 @@ class LibCecController(AbstractCecController):
             try:
                 line = self.stdout_reader.get(timeout=10)
                 if "waiting for input" in line:
-                    self.cec_logger.info('CEC is ready')
+                    self.cec_logger.debug('CEC is ready')
                     break
             except Empty:
                 self.cec_logger.warning("haven't received a line from CEC")
@@ -206,15 +206,16 @@ class LibCecController(AbstractCecController):
             self._init_cec_connection()
 
     def power_on(self):
-        self.logger.info("Power on HDMI CEC device")
+        self.logger.debug("Power on HDMI CEC device")
         self.execute_cec_command("on " + self.device_id)
         # self.activate_source()
 
     def standby(self):
-        self.logger.info("Standby HDMI CEC device %s", self.device_id)
+        self.logger.debug("Standby HDMI CEC device %s", self.device_id)
         self.execute_cec_command("standby " + self.device_id)
 
     def activate_source(self):
+        self.logger.debug("Activating Source")
         self.execute_cec_command("as")
 
     def is_on(self):

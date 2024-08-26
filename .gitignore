@@ -1,7 +1,7 @@
 config.ini
 log/
 .remote-sync.json
-
+alarmmonitor.service
 
 # Created by https://www.gitignore.io/api/flask,python,pycharm+all
 # Edit at https://www.gitignore.io/?templates=flask,python,pycharm+all

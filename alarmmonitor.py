@@ -4,6 +4,8 @@ from sched import scheduler
 
 from chromiumbrowsercontroller import ChromiumBrowserController
 
+import os.path
+TVSTATUSFILE="/tmp/TVON"
 
 class AlarmMonitor:
     """Controls the application's execution flow."""
@@ -35,7 +37,9 @@ class AlarmMonitor:
         self.scheduler.enter(self._polling_interval, 1, self._run_helper)
 
         self._check_browser_status()
-        if self.blaulichtsms_controller.is_alarm():
+        if self.blaulichtsms_controller.is_alarm() or os.path.exists(TVSTATUSFILE):
+            if os.path.exists(TVSTATUSFILE):
+                self.logger.info("TVSTATUSFILE exists")
             self.hdmi_cec_controller.activate_source()
         else:
             self.hdmi_cec_controller.standby()

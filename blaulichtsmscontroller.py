@@ -56,9 +56,9 @@ class BlaulichtSmsController:
             self._session_token = self.get_session()
 
         try:
-            self.logger.info("Requesting blaulichtSMS alarms...")
+            self.logger.debug("Requesting blaulichtSMS alarms...")
             response = requests.get(self.base_url + self._session_token)
-            self.logger.info("Request successful")
+            self.logger.debug("Request successful")
             self.logger.debug("Response body: \n" + pformat(response.json()))
             response_json = response.json()
             alarms = response_json.get("alarms", [])
@@ -77,7 +77,7 @@ class BlaulichtSmsController:
 
         :return: True if there is any active alarm, False otherwise
         """
-        self.logger.info("Checking for new alarms...")
+        self.logger.debug("Checking for new alarms...")
         alarms = self._get_alarms()
         if not alarms:
             return False
